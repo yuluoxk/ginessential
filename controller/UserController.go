@@ -16,9 +16,21 @@ import (
 func Register(ctx *gin.Context) {
 	DB := common.GetDB()
 	// 获取参数
-	name := ctx.PostForm("name")
-	telephone := ctx.PostForm("telephone")
-	password := ctx.PostForm("password")
+	//使用map 获取请求的参数
+	//var requestMap = make(map[string]string)
+	//json.NewDecoder(ctx.Request.Body).Decode(&requestMap)
+
+	//使用结构体
+	//var requestUser = model.User{}
+	//json.NewDecoder(ctx.Request.Body).Decode(&requestUser)
+
+	//使用gin框架自带的
+	var requestUser = model.User{}
+	ctx.Bind(&requestUser)
+
+	name := requestUser.Name
+	telephone := requestUser.Telephone
+	password := requestUser.Password
 	// 数据验证
 	if len(telephone) != 11 {
 		response.Response(ctx, http.StatusUnprocessableEntity, 422, nil, "手机号必须为11位")

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"ginEssential/common"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -16,8 +17,10 @@ func main() {
 	r = CollectRout(r)
 	port := viper.GetString("server.port")
 	if port != "" {
+		fmt.Println("1")
 		panic(r.Run(":" + port))
 	}
+	fmt.Println("2")
 	panic(r.Run())
 }
 
