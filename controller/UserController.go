@@ -81,8 +81,11 @@ func Register(ctx *gin.Context) {
 func Login(ctx *gin.Context) {
 	DB := common.GetDB()
 	// 获取参数
-	telephone := ctx.PostForm("telephone")
-	password := ctx.PostForm("password")
+	var requestUser = model.User{}
+	ctx.Bind(&requestUser)
+
+	telephone := requestUser.Telephone
+	password := requestUser.Password
 	// 数据验证
 	if len(telephone) != 11 {
 		response.Response(ctx, http.StatusUnprocessableEntity, 422, nil, "手机号必须为11位")
